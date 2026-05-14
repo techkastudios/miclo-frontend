@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 import Link from "next/link";
@@ -20,6 +20,29 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const openMenu = useCallback(() => setOpen(true), []);
+  const closeMenu = useCallback(() => setOpen(false), []);
+
+  const onMenuTouchEnd = useCallback(
+    (e: React.TouchEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      openMenu();
+    },
+    [openMenu],
+  );
+
+  const onCloseTouchEnd = useCallback(
+    (e: React.TouchEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      closeMenu();
+    },
+    [closeMenu],
+  );
+
+  const onNavLinkTouchEnd = useCallback(() => {
+    closeMenu();
+  }, [closeMenu]);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
@@ -37,10 +60,13 @@ export function Header() {
       <div className="flex w-full flex-col items-center gap-4 px-4 py-4 md:px-8 md:py-5">
         <div className="flex w-full items-center justify-between lg:justify-center">
           <button
+            type="button"
             aria-label="Menu"
-            className="lg:hidden text-foreground"
-            onClick={() => setOpen(true)}
+            className="lg:hidden touch-manipulation text-foreground relative"
+            onClick={openMenu}
+            onTouchEnd={onMenuTouchEnd}
           >
+            <span className="absolute -inset-2 "></span>
             <Menu className="h-5 w-5" />
           </button>
 
@@ -77,7 +103,14 @@ export function Header() {
       >
         <div className="flex items-center justify-between px-4 py-4 border-b border-black/10">
           <Image src="/assets/logo.png" alt="MICLO" width={120} height={40} />
-          <button aria-label="Close" onClick={() => setOpen(false)}>
+          <button
+            type="button"
+            aria-label="Close"
+            className="touch-manipulation relative"
+            onClick={closeMenu}
+            onTouchEnd={onCloseTouchEnd}
+          >
+            <span className="absolute -inset-2 "></span>
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -86,8 +119,9 @@ export function Header() {
             <Link
               key={item}
               href="/contacts"
-              onClick={() => setOpen(false)}
-              className="text-sm tracking-display uppercase text-black"
+              onClick={closeMenu}
+              onTouchEnd={onNavLinkTouchEnd}
+              className="touch-manipulation text-sm tracking-display uppercase text-black"
             >
               {item}
             </Link>
