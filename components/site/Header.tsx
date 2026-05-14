@@ -30,8 +30,8 @@ export function Header() {
   return (
     <header
       data-scrolled={scrolled}
-      className={`group/header fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/90 backdrop-blur-md border-b border-border" : "bg-transparent"
+      className={`group/header bg-background/90 fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        scrolled ? "backdrop-blur-md border-b border-border" : ""
       }`}
     >
       <div className="flex w-full flex-col items-center gap-4 px-4 py-4 md:px-8 md:py-5">
