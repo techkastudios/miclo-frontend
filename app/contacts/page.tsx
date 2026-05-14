@@ -1,4 +1,8 @@
+import { Suspense } from "react";
 import { CiFacebook, CiInstagram, CiTwitter, CiYoutube } from "react-icons/ci";
+
+import { StoresSection } from "./stores-section";
+import { StoresSkeleton } from "./stores-skeleton";
 
 const MAP_EMBED_SRC =
   "https://maps.google.com/maps?q=Metro+Shopping+Mall%2C+Mirpur+Road%2C+Dhanmondi%2C+Dhaka-1209&hl=en&z=17&ie=UTF8&iwloc=&output=embed";
@@ -12,8 +16,8 @@ const SOCIAL = [
 
 export default function ContactsPage() {
   return (
-    <section className="py-16">
-      <div className="mx-auto w-full max-w-7xl px-4 md:px-8">
+    <section className="py-8 sm:py-12 md:py-16">
+      <div className="container mx-auto px-4 md:px-5">
         <div className="grid grid-cols-12 gap-x-8 gap-y-12 lg:gap-x-10">
           <div className="col-span-12 lg:col-span-4 flex flex-col gap-10">
             <div className="flex flex-col gap-6">
@@ -83,6 +87,10 @@ export default function ContactsPage() {
             </div>
           </div>
         </div>
+
+        <Suspense fallback={<StoresSkeleton />}>
+          <StoresSection />
+        </Suspense>
       </div>
     </section>
   );

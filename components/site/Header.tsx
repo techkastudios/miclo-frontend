@@ -72,11 +72,11 @@ export function Header() {
             <X className="h-5 w-5" />
           </button>
         </div>
-        <nav className="flex flex-col px-6 py-8 gap-6">
+        <nav className="flex flex-col px-6 py-8 gap-6 max-h-[calc(100vh-4.375rem)] overflow-y-auto overflow-x-hidden">
           {NAV.map((item) => (
             <Link
               key={item}
-              href="#"
+              href="/contacts"
               onClick={() => setOpen(false)}
               className="text-sm tracking-display uppercase text-black"
             >

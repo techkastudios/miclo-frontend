@@ -35,7 +35,7 @@
 
 :root {
   /* Reserve space under fixed site header (matches Header.tsx layout). */
-  --site-header-height: 7.5rem;
+  --site-header-height: 4.75rem;
   --radius: 0;
   --background: oklch(0.985 0.002 80);
   --foreground: oklch(0.18 0.01 60);
@@ -64,7 +64,7 @@
 
 @media (min-width: 1024px) {
   :root {
-    --site-header-height: 8.5rem;
+    --site-header-height: 7.375rem;
   }
 }
 
@@ -125,11 +125,11 @@
     letter-spacing: 0.32em;
   }
   .btn-outline {
-    @apply inline-flex items-center justify-center border border-foreground/80 px-4 py-1 md:px-8 md:py-3 text-[11px] font-medium uppercase text-foreground transition-all duration-300 hover:bg-foreground hover:text-background;
+    @apply cursor-pointer inline-flex items-center justify-center border border-foreground/80 px-4 py-1 md:px-8 md:py-3 text-[11px] font-medium uppercase text-foreground transition-all duration-300 hover:bg-foreground hover:text-background;
     letter-spacing: 0.32em;
   }
   .btn-outline-light {
-    @apply inline-flex items-center justify-center border border-white/90 px-8 py-3 text-[11px] font-medium uppercase text-white transition-all duration-300 hover:bg-white hover:text-foreground;
+    @apply cursor-pointer inline-flex items-center justify-center border border-white/90 px-8 py-3 text-[11px] font-medium uppercase text-white transition-all duration-300 hover:bg-white hover:text-foreground;
     letter-spacing: 0.32em;
   }
   .nav-link {
