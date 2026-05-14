@@ -18,7 +18,7 @@ export default function ContactsPage() {
   return (
     <section className="py-8 sm:py-12 md:py-16">
       <div className="container mx-auto px-4 md:px-5">
-        <div className="grid grid-cols-12 gap-x-8 gap-y-12 lg:gap-x-10">
+        <div className="grid grid-cols-12 gap-x-8 gap-y-12 lg:gap-x-10 border-b pb-10 md:pb-16">
           <div className="col-span-12 lg:col-span-4 flex flex-col gap-10">
             <div className="flex flex-col gap-6">
               <h1 className="text-2xl font-light tracking-tight text-foreground md:text-3xl">
