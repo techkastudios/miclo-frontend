@@ -1,26 +1,160 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+}
+
+:root {
+  /* Reserve space under fixed site header (matches Header.tsx layout). */
+  --site-header-height: 7.5rem;
+  --radius: 0;
+  --background: oklch(0.985 0.002 80);
+  --foreground: oklch(0.18 0.01 60);
+  --surface: oklch(0.96 0.003 80);
+  --ink: oklch(0.14 0.01 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.01 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.01 60);
+  --primary: oklch(0.18 0.01 60);
+  --primary-foreground: oklch(0.985 0.002 80);
+  --secondary: oklch(0.94 0.005 80);
+  --secondary-foreground: oklch(0.18 0.01 60);
+  --muted: oklch(0.94 0.005 80);
+  --muted-foreground: oklch(0.5 0.01 60);
+  --accent: oklch(0.94 0.005 80);
+  --accent-foreground: oklch(0.18 0.01 60);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0.002 80);
+  --border: oklch(0.88 0.005 80);
+  --input: oklch(0.88 0.005 80);
+  --ring: oklch(0.55 0.18 25);
+  --brand: #cc2128;
+  --brand-foreground: oklch(0.99 0.002 80);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --site-header-height: 8.5rem;
+  }
+}
+
+.dark {
+  --background: oklch(0.12 0.01 60);
+  --foreground: oklch(0.96 0.003 80);
+  --surface: oklch(0.16 0.01 60);
+  --ink: oklch(0.96 0.003 80);
+  --card: oklch(0.16 0.01 60);
+  --card-foreground: oklch(0.96 0.003 80);
+  --popover: oklch(0.16 0.01 60);
+  --popover-foreground: oklch(0.96 0.003 80);
+  --primary: oklch(0.96 0.003 80);
+  --primary-foreground: oklch(0.12 0.01 60);
+  --secondary: oklch(0.22 0.01 60);
+  --secondary-foreground: oklch(0.96 0.003 80);
+  --muted: oklch(0.22 0.01 60);
+  --muted-foreground: oklch(0.7 0.01 60);
+  --accent: oklch(0.22 0.01 60);
+  --accent-foreground: oklch(0.96 0.003 80);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.96 0.003 80);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.55 0.22 27);
+  --brand: #cc2128;
+  --brand-foreground: oklch(0.99 0.002 80);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: oklch(0.12 0.01 60);
+    --foreground: oklch(0.96 0.003 80);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
 }
+
+@layer utilities {
+  .tracking-display {
+    letter-spacing: 0.18em;
+  }
+  .tracking-wider-2 {
+    letter-spacing: 0.32em;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center border border-foreground/80 px-4 py-1 md:px-8 md:py-3 text-[11px] font-medium uppercase text-foreground transition-all duration-300 hover:bg-foreground hover:text-background;
+    letter-spacing: 0.32em;
+  }
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center border border-white/90 px-8 py-3 text-[11px] font-medium uppercase text-white transition-all duration-300 hover:bg-white hover:text-foreground;
+    letter-spacing: 0.32em;
+  }
+  .nav-link {
+    @apply relative text-[12px] font-medium uppercase text-foreground transition-colors hover:text-brand after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-brand after:transition-all hover:after:w-full;
+    letter-spacing: 0.18em;
+  }
+  .group\/header[data-scrolled="true"] .nav-link {
+    @apply text-foreground/80;
+  }
+  .nav-link.active,
+  .group\/header[data-scrolled="true"] .nav-link.active {
+    @apply text-brand after:w-full;
+  }
+  a:hover {
+    color: var(--color-brand);
+  }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-up { animation: fade-up 0.9s ease-out both; }
+.animate-fade-in { animation: fade-in 1.2s ease-out both; }
