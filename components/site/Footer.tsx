@@ -32,7 +32,7 @@ export function Footer() {
 
           <nav className="flex flex-wrap gap-x-6 gap-y-3">
             {LINKS.map((l) => (
-              <Link key={l} href="#" className="text-[11px] tracking-display uppercase text-muted-foreground hover:text-foreground transition-colors">
+              <Link key={l} href="/contacts" className="text-[11px] tracking-display uppercase text-muted-foreground hover:text-foreground transition-colors">
                 {l}
               </Link>
             ))}
