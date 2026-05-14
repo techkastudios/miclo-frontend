@@ -44,8 +44,17 @@ export function Header() {
             <Menu className="h-5 w-5" />
           </button>
 
-          <Link href="/" className="flex justify-center">
-            <Image src="/assets/logo.png" alt="MICLO" width={140} height={56} />
+          <Link
+            href="/"
+            className="relative isolate inline-flex justify-center overflow-hidden before:pointer-events-none before:absolute before:top-0 before:left-[-75%] before:z-1 before:block before:h-full before:w-[10%] before:-skew-x-[25deg] before:bg-white before:opacity-50 before:content-[''] before:animate-logo__animation"
+          >
+            <Image
+              src="/assets/logo.png"
+              alt="MICLO"
+              width={140}
+              height={56}
+              className="relative z-0"
+            />
           </Link>
 
           <div className="lg:hidden w-5" aria-hidden="true" />

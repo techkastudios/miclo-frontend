@@ -31,6 +31,7 @@
   --color-brand-foreground: var(--brand-foreground);
   --color-surface: var(--surface);
   --color-ink: var(--ink);
+  --animate-logo__animation: logo__animation 3s infinite;
 }
 
 :root {
@@ -145,6 +146,12 @@
   }
   a:hover {
     color: var(--color-brand);
+  }
+}
+
+@keyframes logo__animation {
+  to {
+    left: 150%;
   }
 }
 
