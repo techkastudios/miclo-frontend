@@ -18,10 +18,10 @@ export default function ContactsPage() {
   return (
     <section className="py-8 sm:py-12 md:py-16">
       <div className="container mx-auto px-4 md:px-5">
-        <div className="grid grid-cols-12 gap-x-8 gap-y-12 lg:gap-x-10 border-b pb-10 md:pb-16">
+        <div className="grid grid-cols-12 gap-x-8 gap-y-12 lg:gap-x-10 border-b pb-8 md:pb-10 lg:pb-16">
           <div className="col-span-12 lg:col-span-4 flex flex-col gap-10">
             <div className="flex flex-col gap-6">
-              <h1 className="text-2xl font-light tracking-tight text-foreground md:text-3xl">
+              <h1 className="text-xl lg:text-2xl font-light tracking-tight text-foreground md:text-3xl">
                 Corporate Office
               </h1>
               <address className="not-italic flex flex-col gap-4 text-sm leading-relaxed text-muted-foreground md:text-base">
@@ -30,26 +30,28 @@ export default function ContactsPage() {
                   <span>Metro Shopping Mall, Mirpur Road,</span>
                   <span>Dhanmondi, Dhaka-1209</span>
                 </p>
-                <p>
-                  <span className="sr-only">Phone</span>
-                  <span className="font-medium text-foreground">T:</span>{" "}
-                  <a
-                    href="tel:+8801713286680"
-                    className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
-                  >
-                    01713286680
-                  </a>
-                </p>
-                <p>
-                  <span className="sr-only">Email</span>
-                  <span className="font-medium text-foreground">E:</span>{" "}
-                  <a
-                    href="mailto:contact@miclo.com"
-                    className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
-                  >
-                    contact@miclo.com
-                  </a>
-                </p>
+                <div className="flex flex-col gap-1">
+                  <p>
+                    <span className="sr-only">Phone</span>
+                    <span className="font-medium text-foreground">T:</span>{" "}
+                    <a
+                      href="tel:+8801713286680"
+                      className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                    >
+                      01713286680
+                    </a>
+                  </p>
+                  <p>
+                    <span className="sr-only">Email</span>
+                    <span className="font-medium text-foreground">E:</span>{" "}
+                    <a
+                      href="mailto:contact@miclo.com"
+                      className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                    >
+                      contact@miclo.com
+                    </a>
+                  </p>
+                </div>
               </address>
             </div>
 
@@ -75,7 +77,7 @@ export default function ContactsPage() {
           </div>
 
           <div className="col-span-12 lg:col-span-8">
-            <div className="aspect-4/3 w-full overflow-hidden rounded-xl border border-border bg-muted shadow-sm md:aspect-video lg:aspect-16/10">
+            <div className="aspect-2/1 w-full overflow-hidden rounded-xl border border-border bg-muted shadow-sm xl:aspect-16/6">
               <iframe
                 title="Metro Shopping Mall, Dhanmondi — map"
                 src={MAP_EMBED_SRC}

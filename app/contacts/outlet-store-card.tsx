@@ -8,14 +8,14 @@ type OutletStoreCardProps = {
 export function OutletStoreCard({ outlet }: OutletStoreCardProps) {
   const {phone, email} = outlet?.contact;
   return (
-    <div className="transition-all duration-300">
-      <h3 className="mb-3 text-lg font-semibold text-foreground">{outlet.title}</h3>
-      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+    <div className="transition-all duration-300 space-y-3 md:space-y-4 xl:space-y-5">
+      <h3 className="text-base sm:text-lg font-semibold text-foreground">{outlet.title}</h3>
+      <p className="text-sm leading-relaxed text-muted-foreground">
         {outlet.address.full_address}
       </p>
 
       {outlet.contact && (
-        <div className="mb-4 flex flex-col gap-2 text-sm text-muted-foreground">
+        <div className="flex flex-col gap-1 text-sm text-muted-foreground">
           {phone ? (
             <p>
               <span className="font-medium text-foreground">Phone:</span>{" "}
@@ -42,7 +42,7 @@ export function OutletStoreCard({ outlet }: OutletStoreCardProps) {
       )}
 
       <p
-        className={`mb-6 text-sm font-medium ${
+        className={`text-sm font-medium ${
           outlet.hours.is_open_now ? "text-green-600" : "text-red-500"
         }`}
       >

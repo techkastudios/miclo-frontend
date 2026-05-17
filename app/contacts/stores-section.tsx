@@ -14,8 +14,8 @@ export async function StoresSection() {
 
   if (!result.ok) {
     return (
-      <section className="mt-10 md:mt-16">
-        <h2 className="mb-8 text-3xl font-semibold text-foreground">Our Stores</h2>
+      <section className="mt-8 md:mt-10 lg:mt-16">
+        <h2 className="mb-4 md:mb-6 xl:mb-8 text-xl md:text-2xl xl:text-3xl font-semibold text-foreground">Our Stores</h2>
         <div
           className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
           role="alert"
@@ -30,18 +30,18 @@ export async function StoresSection() {
 
   if (outlets.length === 0) {
     return (
-      <section className="mt-10 md:mt-16">
-        <h2 className="mb-8 text-3xl font-semibold text-foreground">Our Stores</h2>
+      <section className="mt-8 md:mt-10 lg:mt-16">
+        <h2 className="mb-4 md:mb-6 xl:mb-8 text-xl md:text-2xl xl:text-3xl font-semibold text-foreground">Our Stores</h2>
         <p className="text-sm text-muted-foreground">No store locations are available right now.</p>
       </section>
     );
   }
 
   return (
-    <section className="mt-10 md:mt-16">
-      <h2 className="mb-8 text-3xl font-semibold text-foreground">Our Stores</h2>
+    <section className="mt-8 md:mt-10 lg:mt-16">
+      <h2 className="mb-4 md:mb-6 xl:mb-8 text-xl md:text-2xl xl:text-3xl font-semibold text-foreground">Our Stores</h2>
 
-      <div className="grid grid-cols-1 gap-6 md:gap-y-10 xl:gap-y-16 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-8 md:gap-10 md:gap-y-10 xl:gap-y-16 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
         {outlets.map((outlet) => (
           <OutletStoreCard
             key={
