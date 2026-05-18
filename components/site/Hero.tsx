@@ -8,7 +8,7 @@ const FALLBACK_HERO_SRC = "/assets/hero.jpg";
 type BannerCta = {
   label: string | null;
   url: string | null;
-  target: string;
+  target?: string;
 };
 
 type Banner = {
@@ -16,7 +16,7 @@ type Banner = {
   title: string | null;
   subtitle: string | null;
   image: string | null;
-  mobile_image: string | null;
+  mobile_image?: string | null;
   position: string;
   sort_order: number;
   cta: BannerCta;
@@ -45,10 +45,18 @@ function resolveBannerImageUrl(path: string | null | undefined): string | null {
   return `${base}/storage/${relative}`;
 }
 
-async function getHomeHeroImage(): Promise<{ src: string; alt: string }> {
+async function getHomeHeroBanner(): Promise<Banner> {
   const fallback = {
-    src: FALLBACK_HERO_SRC,
-    alt: "MICLO new arrivals campaign",
+    id: "1",
+    title: "The new",
+    subtitle: "arrivals",
+    image: FALLBACK_HERO_SRC,
+    position: "home_hero",
+    sort_order: 0,
+    cta: {
+      label: "New Arrivals",
+      url: "/collection/new-arrivals",
+    }
   };
 
   try {
@@ -71,8 +79,8 @@ async function getHomeHeroImage(): Promise<{ src: string; alt: string }> {
     if (!resolved) return fallback;
 
     return {
-      src: resolved,
-      alt: banner?.title?.trim() || fallback.alt,
+      ...banner,
+      image: resolved
     };
   } catch {
     return fallback;
@@ -80,12 +88,12 @@ async function getHomeHeroImage(): Promise<{ src: string; alt: string }> {
 }
 
 export async function Hero() {
-  const { src, alt } = await getHomeHeroImage();
-
+  const {title, subtitle, cta, image } = await getHomeHeroBanner();
+  const alt = title?.trim() || "MICLO new arrivals campaign"
   return (
     <section className="relative h-[max(640px,calc(100svh-var(--site-header-height)))] min-h-[max(640px,calc(100svh-var(--site-header-height)))] w-full overflow-hidden">
       <Image
-        src={src}
+        src={image || FALLBACK_HERO_SRC}
         alt={alt}
         fill
         className="object-cover object-top"
@@ -100,10 +108,10 @@ export async function Hero() {
           Spring / Summer 26
         </p>
         <h1 className="animate-fade-up text-white font-light tracking-display uppercase text-4xl md:text-6xl lg:text-7xl mb-10 max-w-4xl leading-[1.05]">
-          The new <span className="italic font-extralight">arrivals</span>
+          {title} <span className="italic font-extralight">{subtitle}</span>
         </h1>
-        <a href="#collections" className={cn("animate-fade-up btn-outline not-dark:invert")} style={{ animationDelay: "0.3s" }}>
-          New Arrivals
+        <a href={cta.url || "/"} className={cn("animate-fade-up btn-outline not-dark:invert")} style={{ animationDelay: "0.3s" }}>
+          {cta.label}
         </a>
       </div>
     </section>
