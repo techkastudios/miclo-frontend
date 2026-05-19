@@ -1,3 +1,6 @@
+import { Banner } from "@/types";
+import { resolvePublicImageUrl } from "@/lib/utils";
+
 const DEFAULT_PUBLIC_API_URL = "http://localhost:8080";
 
 /** Backend origin without a trailing slash (aligned with `next.config` image remote defaults). */
@@ -102,4 +105,70 @@ export async function apiFetchJson<T = unknown>(
   }
 
   return { ok: true, data: parsed as T, response: result.response };
+}
+
+type BannerPosition = 'home_hero' | 'home_secondary' | 'category_hero' | 'product_page' | 'promotional'
+
+export type BannersResponse = {
+  success: boolean;
+  data: Banner[];
+};
+
+function isBannersResponse(data: unknown): data is BannersResponse {
+  if (!data || typeof data !== "object") return false;
+  const o = data as Record<string, unknown>;
+  return o.success === true && Array.isArray(o.data);
+}
+
+
+/**
+ * Loads banners from `GET /api/v1/banners`, picks the entry for `position`, and
+ * resolves `image` to a public URL. On HTTP/parse/validation errors, missing
+ * banners, or an unresolvable image, returns a static fallback built from
+ * `fallback_src`.
+ *
+ * @param position - Banner slot to prefer; defaults to `home_hero`.
+ * @param fallback_src - Image URL used when the API call or resolution fails.
+ * @returns Resolved {@link Banner} (API match or `fallback_src` fallback).
+ */
+export async function getHeroBanner(position:BannerPosition='home_hero', fallback_src: string): Promise<Banner> {
+  const fallback = {
+    id: "1",
+    title: "The new",
+    subtitle: "arrivals",
+    image: fallback_src,
+    position,
+    sort_order: 0,
+    cta: {
+      label: "New Arrivals",
+      url: "/collection/new-arrivals",
+    }
+  };
+
+  try {
+    const result = await apiFetchJson<BannersResponse>("/api/v1/banners", {
+      next: { revalidate: 60 },
+      validate: isBannersResponse,
+    });
+
+    if (!result.ok) return fallback;
+
+    const json = result.data;
+    const sorted = [...json.data].sort((a, b) => a.sort_order - b.sort_order);
+    const banner =
+      sorted.find((b) => b.position === position) ?? sorted[0] ?? null;
+
+    const resolved = resolvePublicImageUrl(
+      banner?.image ?? banner?.mobile_image ?? null
+    );
+
+    if (!resolved) return fallback;
+
+    return {
+      ...banner,
+      image: resolved
+    };
+  } catch {
+    return fallback;
+  }
 }

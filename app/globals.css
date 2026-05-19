@@ -69,7 +69,7 @@
   }
 }
 
-.dark {
+/* .dark {
   --background: oklch(0.12 0.01 60);
   --foreground: oklch(0.96 0.003 80);
   --surface: oklch(0.16 0.01 60);
@@ -100,7 +100,7 @@
     --background: oklch(0.12 0.01 60);
     --foreground: oklch(0.96 0.003 80);
   }
-}
+} */
 
 
 @layer base {
