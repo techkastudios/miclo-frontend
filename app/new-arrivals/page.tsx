@@ -2,7 +2,7 @@ import { Hero } from "@/components/site/Hero";
 import { getHeroBanner, getProducts } from "@/lib/api";
 import EditorialGrid from "../(components)/EditorialGrid";
 
-const FALLBACK_HERO_SRC = "/assets/hero.jpg";
+const FALLBACK_HERO_SRC = "/assets/default-banner.jpeg";
 
 async function NewArrivals() {
     const { data: bannerData } = await getHeroBanner("product_page", FALLBACK_HERO_SRC);

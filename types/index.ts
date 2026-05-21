@@ -121,3 +121,13 @@ export interface NavigationApiResponse {
     meta: string | null;
     errors: string | null;
 }
+
+export interface CategoryApiResponse {
+    success: boolean;
+    message: string;
+    data: Category;
+    meta: string | null;
+    errors: string | null;
+}
+
+export type Cat = { title: string; img: string; href: string };

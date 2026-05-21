@@ -1,4 +1,4 @@
-import { Banner, NavigationApiResponse, ProductsApiResponse } from "@/types";
+import { Banner, Cat, NavigationApiResponse, ProductsApiResponse } from "@/types";
 import { resolvePublicImageUrl } from "@/lib/utils";
 
 const DEFAULT_PUBLIC_API_URL = "http://localhost:8080";
@@ -140,18 +140,18 @@ export async function getHeroBanner(
         message: "success",
         data: {
             id: "1",
-            title: "The new",
-            subtitle: "arrivals",
+            title: "",
+            subtitle: "",
             description: "",
             image: fallback_src,
             mobile_image: "",
             cta: {
-                label: "New Arrivals",
-                url: "/collection/new-arrivals",
+                label: "",
+                url: "",
                 target: "_self",
                 link_type: "custom",
             },
-            position: "about_hero",
+            position: "",
             sort_order: 1,
             starts_at: "",
             ends_at: "",
@@ -166,7 +166,6 @@ export async function getHeroBanner(
             validate: isBannersResponse,
         });
 
-        console.log(result);
         if (!result.ok) return fallback;
 
         const resolved = resolvePublicImageUrl(
@@ -251,3 +250,89 @@ export async function getNavigation(
         validate: isNavigationApiResponse,
     });
 }
+
+
+const FALLBACK_CATS: Cat[] = [
+    { title: "Womenswear", img: "/assets/cat-women.jpg", href: "#" },
+    { title: "Menswear", img: "/assets/cat-men.jpg", href: "#" },
+    { title: "Kidswear", img: "/assets/cat-kids.jpg", href: "#" },
+    { title: "Accessories", img: "/assets/cat-accessories.jpg", href: "#" },
+    { title: "Winter Collection", img: "/assets/cat-winter.jpg", href: "#" },
+  ];
+  
+  type FeaturedCategory = {
+    id: string;
+    name: string;
+    slug: string;
+    image: string;
+    sort_order: number;
+  };
+  
+  type FeaturedCategoriesResponse = {
+    success: boolean;
+    data: FeaturedCategory[];
+  };
+  
+  function isFeaturedCategoriesResponse(
+    data: unknown
+  ): data is FeaturedCategoriesResponse {
+    if (!data || typeof data !== "object") return false;
+    const o = data as Record<string, unknown>;
+    if (o.success !== true || !Array.isArray(o.data)) return false;
+    return o.data.every(
+      (item) =>
+        item &&
+        typeof item === "object" &&
+        typeof (item as FeaturedCategory).name === "string" &&
+        typeof (item as FeaturedCategory).slug === "string" &&
+        typeof (item as FeaturedCategory).image === "string" &&
+        typeof (item as FeaturedCategory).sort_order === "number"
+    );
+  }
+  
+  function resolveCategoryImageUrl(path: string | null | undefined): string | null {
+    if (!path?.trim()) return null;
+    const base = getPublicApiBaseUrl();
+    const trimmed = path.trim();
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    const relative = trimmed.replace(/^\//, "");
+    if (relative.startsWith("storage/")) {
+      return `${base}/${relative}`;
+    }
+    return `${base}/storage/${relative}`;
+  }
+  
+  function mapApiCategory(c: FeaturedCategory): Cat | null {
+    const img = resolveCategoryImageUrl(c.image);
+    if (!img) return null;
+    return {
+      title: c.name,
+      img,
+      href: `${c.slug}`,
+    };
+  }
+  
+  export async function getFeaturedCategories(): Promise<Cat[]> {
+    try {
+      const result = await apiFetchJson<FeaturedCategoriesResponse>(
+        "/api/v1/categories/featured",
+        {
+          next: { revalidate: 60 },
+          // validate: isFeaturedCategoriesResponse,
+        }
+      );
+    
+      if (!result.ok) return FALLBACK_CATS;
+  
+      const sorted = [...result.data.data].sort(
+        (a, b) => a.sort_order - b.sort_order
+      );
+      const mapped = sorted
+        .map(mapApiCategory)
+        .filter((c): c is Cat => c !== null);
+  
+      return mapped.length > 0 ? mapped : FALLBACK_CATS;
+    } catch {
+      return FALLBACK_CATS;
+    }
+  }

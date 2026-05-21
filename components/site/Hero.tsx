@@ -2,14 +2,14 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { BannerData } from "@/types";
 
-const FALLBACK_HERO_SRC = "/assets/hero.jpg";
+// const FALLBACK_HERO_SRC = "/assets/hero.jpg";
 
 export async function Hero({ title, subtitle, cta, image }: BannerData) {
     const alt = title?.trim() || "MICLO new arrivals campaign";
     return (
         <section className="relative h-[max(240px,calc(100svh-var(--site-header-height)))] lg:h-[max(640px,calc(100svh-var(--site-header-height)))] lg:min-h-[max(640px,calc(100svh-var(--site-header-height)))] w-full overflow-hidden">
             <Image
-                src={image || FALLBACK_HERO_SRC}
+                src={image}
                 alt={alt}
                 fill
                 className="object-cover object-top"
