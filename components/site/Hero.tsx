@@ -7,7 +7,7 @@ const FALLBACK_HERO_SRC = "/assets/hero.jpg";
 export async function Hero({title, subtitle, cta, image }: Banner) {
   const alt = title?.trim() || "MICLO new arrivals campaign"
   return (
-    <section className="relative h-[max(640px,calc(100svh-var(--site-header-height)))] min-h-[max(640px,calc(100svh-var(--site-header-height)))] w-full overflow-hidden">
+    <section className="relative h-[max(240px,calc(100svh-var(--site-header-height)))] lg:h-[max(640px,calc(100svh-var(--site-header-height)))] lg:min-h-[max(640px,calc(100svh-var(--site-header-height)))] w-full overflow-hidden">
       <Image
         src={image || FALLBACK_HERO_SRC}
         alt={alt}
@@ -24,7 +24,7 @@ export async function Hero({title, subtitle, cta, image }: Banner) {
           Spring / Summer 26
         </p> */}
         {title && (
-          <h1 className="animate-fade-up text-white font-light tracking-display uppercase text-4xl md:text-6xl lg:text-7xl mb-10 max-w-4xl leading-[1.05]">
+          <h1 className="animate-fade-up text-white font-light tracking-display uppercase text-4xl md:text-6xl lg:text-7xl mb-10 max-w-xs md:max-w-4xl leading-[1.05]">
             {title} <span className="italic font-extralight">{subtitle}</span>
           </h1>
         )}

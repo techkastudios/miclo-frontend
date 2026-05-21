@@ -61,7 +61,7 @@ function mapApiCategory(c: FeaturedCategory): Cat | null {
   return {
     title: c.name,
     img,
-    href: `/categories/${c.slug}`,
+    href: `${c.slug}`,
   };
 }
 
@@ -113,6 +113,9 @@ function Tile({ cat, className = "" }: { cat: Cat; className?: string }) {
 
 export async function Categories() {
   const cats = await getFeaturedCategories();
+
+  console.log("Categories res: ", cats);
+  
 
   const [top0, top1, mid0, mid1, ...tail] = cats;
 
