@@ -36,3 +36,30 @@ export interface ProductResponse {
     created_at: string;
     updated_at: string;
 }
+
+export interface PaginationMeta {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    from: number | null;
+    to: number | null;
+}
+
+export interface LinksMeta {
+    first: string | null;
+    last: string | null;
+    prev: string | null;
+    next: string | null;
+}
+
+export interface ProductsApiResponse {
+    success: boolean;
+    message: string;
+    data: ProductResponse[];
+    meta: {
+        pagination: PaginationMeta;
+        links: LinksMeta;
+    };
+    errors: string | null;
+}

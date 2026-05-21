@@ -1,5 +1,6 @@
 import { Banner } from "@/types";
 import { resolvePublicImageUrl } from "@/lib/utils";
+import type { ProductsApiResponse } from "@/types/apiResponseTypes";
 
 const DEFAULT_PUBLIC_API_URL = "http://localhost:8080";
 
@@ -175,4 +176,43 @@ export async function getHeroBanner(
     } catch {
         return fallback;
     }
+}
+
+function isProductsApiResponse(data: unknown): data is ProductsApiResponse {
+    if (!data || typeof data !== "object") return false;
+    const o = data as Record<string, unknown>;
+    return (
+        o.success === true &&
+        Array.isArray(o.data) &&
+        o.meta !== null &&
+        typeof o.meta === "object"
+    );
+}
+
+export type GetProductsOptions = ApiFetchOptions & {
+    category?: string;
+    page?: number;
+    perPage?: number;
+};
+
+/**
+ * Fetches products from `GET /api/v1/products` with optional category, page, and per-page filters.
+ * Returns the parsed API response on success, or a structured failure on error.
+ */
+export async function getProducts(
+    options?: GetProductsOptions,
+): Promise<ApiJsonSuccess<ProductsApiResponse> | ApiJsonFailure> {
+    const { category, page, perPage, next, ...fetchOptions } = options ?? {};
+    const params = new URLSearchParams();
+    if (category) params.set("category", category);
+    if (page) params.set("page", String(page));
+    if (perPage) params.set("per_page", String(perPage));
+    const qs = params.toString();
+    const path = qs ? `/api/v1/products?${qs}` : "/api/v1/products";
+
+    return apiFetchJson<ProductsApiResponse>(path, {
+        ...fetchOptions,
+        next: { revalidate: 60, ...next },
+        validate: isProductsApiResponse,
+    });
 }
