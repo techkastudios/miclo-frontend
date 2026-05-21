@@ -13,7 +13,7 @@ async function NewArrivals() {
         <>
             <Hero {...bannerData} />
 
-            <EditorialGrid products={products} />
+            <EditorialGrid products={products} hasFullColumnsProduct={false} />
         </>
     );
 }

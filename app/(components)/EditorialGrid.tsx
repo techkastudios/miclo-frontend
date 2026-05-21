@@ -4,23 +4,25 @@ import Image from "next/image";
 
 interface EditorialGridProps {
     products: ProductResponse[];
+    hasFullColumnsProduct?: boolean;
 }
 
-export default function EditorialGrid({ products }: EditorialGridProps) {
+export default function EditorialGrid({
+    products,
+    hasFullColumnsProduct = true,
+}: EditorialGridProps) {
     const getColSpanClass = (index: number): string => {
-        // Row 1: First 3 products (Indices 0, 1, 2) -> 3 columns
-        if (index < 3) return "col-span-2 aspect-square";
+        if (!hasFullColumnsProduct) {
+            const positionInLoop = index % 5;
+            if (positionInLoop < 3) return "col-span-2 aspect-square";
+            return "col-span-3 aspect-2/1.5";
+        }
 
-        // Row 2: 4th product (Index 3) -> 1 big full-width column
+        if (index < 3) return "col-span-2 aspect-square";
         if (index === 3) return "col-span-6 min-h-[350px] aspect-2/0.75";
 
-        // 2 items (50-50), then 3 items (3-columns)
         const positionInLoop = (index - 4) % 5;
-
-        // First 2 items in the loop -> 2 columns (50-50)
         if (positionInLoop < 2) return "col-span-3 aspect-2/1.5";
-
-        // Remaining 3 items in the loop -> 3 columns
         return "col-span-2 aspect-square";
     };
 
