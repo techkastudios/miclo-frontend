@@ -86,7 +86,7 @@ function ProductSlide({
                         loading="lazy"
                         width={500}
                         height={500}
-                        className="aspect-square"
+                        className="aspect-square object-cover"
                     />
                 )}
             </div>
