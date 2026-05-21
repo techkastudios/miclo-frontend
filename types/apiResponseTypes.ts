@@ -60,6 +60,6 @@ export interface ProductsApiResponse {
     meta: {
         pagination: PaginationMeta;
         links: LinksMeta;
-    };
+    } | null;
     errors: string | null;
 }

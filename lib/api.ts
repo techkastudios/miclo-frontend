@@ -181,12 +181,11 @@ export async function getHeroBanner(
 function isProductsApiResponse(data: unknown): data is ProductsApiResponse {
     if (!data || typeof data !== "object") return false;
     const o = data as Record<string, unknown>;
-    return (
-        o.success === true && Array.isArray(o.data) && o.meta !== null && typeof o.meta === "object"
-    );
+    return o.success === true && Array.isArray(o.data);
 }
 
 export type GetProductsOptions = ApiFetchOptions & {
+    type?: string;
     category?: string;
     page?: number;
     perPage?: number;
@@ -199,13 +198,19 @@ export type GetProductsOptions = ApiFetchOptions & {
 export async function getProducts(
     options?: GetProductsOptions,
 ): Promise<ApiJsonSuccess<ProductsApiResponse> | ApiJsonFailure> {
-    const { category, page, perPage, next, ...fetchOptions } = options ?? {};
+    const { type, category, page, perPage, next, ...fetchOptions } = options ?? {};
     const params = new URLSearchParams();
     if (category) params.set("category", category);
     if (page) params.set("page", String(page));
     if (perPage) params.set("per_page", String(perPage));
     const qs = params.toString();
-    const path = qs ? `/api/v1/products?${qs}` : "/api/v1/products";
+    const path = type
+        ? `/api/v1/products/${type}`
+        : qs
+          ? `/api/v1/products?${qs}`
+          : "/api/v1/products";
+
+    console.log();
 
     return apiFetchJson<ProductsApiResponse>(path, {
         ...fetchOptions,
