@@ -1,6 +1,10 @@
-import { ProductResponse } from "@/types/apiResponseTypes";
+"use client";
+
 import { CiInstagram as IgIcon } from "react-icons/ci";
 import Image from "next/image";
+import { ProductResponse } from "@/types";
+import React, { useState } from "react";
+import ProductSlide from "./ProductSlide";
 
 interface EditorialGridProps {
     products: ProductResponse[];
@@ -11,6 +15,15 @@ export default function EditorialGrid({
     products,
     hasFullColumnsProduct = true,
 }: EditorialGridProps) {
+    const [isShown, setIsShown] = useState<boolean>(false);
+    const [slideProperties, setSlideProperties] = useState<{
+        gallery: string[] | [];
+        featuredImage: string;
+    }>({
+        gallery: [],
+        featuredImage: "",
+    });
+
     const getColSpanClass = (index: number): string => {
         if (!hasFullColumnsProduct) {
             const positionInLoop = index % 5;
@@ -32,11 +45,20 @@ export default function EditorialGrid({
                 const spanClass = getColSpanClass(index);
 
                 return (
-                    <a
+                    <div
                         key={product.id}
-                        className={`${spanClass} group relative block  overflow-hidden bg-surface`}
-                        href="#"
-                        // className="group relative block aspect-square overflow-hidden bg-surface"
+                        onClick={() => {
+                            setIsShown(true);
+                            setSlideProperties({
+                                gallery: product.gallery || [],
+                                featuredImage: product.featured_image,
+                            });
+
+                            document
+                                .getElementsByTagName("body")[0]
+                                .classList.add("overflow-hidden");
+                        }}
+                        className={`${spanClass} group relative cursor-pointer overflow-hidden bg-surface`}
                     >
                         <Image
                             src={product.featured_image}
@@ -48,9 +70,16 @@ export default function EditorialGrid({
                         <div className="absolute inset-0 flex items-center justify-center bg-foreground/0 opacity-0 transition-all duration-300 group-hover:bg-foreground/40 group-hover:opacity-100">
                             <IgIcon className="h-6 w-6 text-white" />
                         </div>
-                    </a>
+                    </div>
                 );
             })}
+            {isShown && (
+                <ProductSlide
+                    gallery={slideProperties.gallery}
+                    setShown={setIsShown}
+                    featuredImage={slideProperties.featuredImage}
+                />
+            )}
         </div>
     );
 }
