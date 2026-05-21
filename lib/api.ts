@@ -1,6 +1,5 @@
-import { Banner } from "@/types";
+import { Banner, ProductsApiResponse } from "@/types";
 import { resolvePublicImageUrl } from "@/lib/utils";
-import type { ProductsApiResponse } from "@/types/apiResponseTypes";
 
 const DEFAULT_PUBLIC_API_URL = "http://localhost:8080";
 
@@ -110,20 +109,16 @@ export async function apiFetchJson<T = unknown>(
 
 type BannerPosition =
     | "home_hero"
+    | "about_hero"
     | "home_secondary"
     | "category_hero"
     | "product_page"
     | "promotional";
 
-export type BannersResponse = {
-    success: boolean;
-    data: Banner[];
-};
-
-function isBannersResponse(data: unknown): data is BannersResponse {
+function isBannersResponse(data: unknown): data is Banner {
     if (!data || typeof data !== "object") return false;
     const o = data as Record<string, unknown>;
-    return o.success === true && Array.isArray(o.data);
+    return o.success === true;
 }
 
 /**
@@ -141,37 +136,54 @@ export async function getHeroBanner(
     fallback_src: string,
 ): Promise<Banner> {
     const fallback = {
-        id: "1",
-        title: "The new",
-        subtitle: "arrivals",
-        image: fallback_src,
-        position,
-        sort_order: 0,
-        cta: {
-            label: "New Arrivals",
-            url: "/collection/new-arrivals",
+        success: true,
+        message: "success",
+        data: {
+            id: "1",
+            title: "The new",
+            subtitle: "arrivals",
+            description: "",
+            image: fallback_src,
+            mobile_image: "",
+            cta: {
+                label: "New Arrivals",
+                url: "/collection/new-arrivals",
+                target: "_self",
+                link_type: "custom",
+            },
+            position: "about_hero",
+            sort_order: 1,
+            starts_at: "",
+            ends_at: "",
         },
+        meta: "",
+        errors: "",
     };
 
     try {
-        const result = await apiFetchJson<BannersResponse>("/api/v1/banners", {
+        const result = await apiFetchJson<Banner>(`/api/v1/banners?position=${position}`, {
             next: { revalidate: 60 },
             validate: isBannersResponse,
         });
 
+        console.log(result);
         if (!result.ok) return fallback;
 
-        const json = result.data;
-        const sorted = [...json.data].sort((a, b) => a.sort_order - b.sort_order);
-        const banner = sorted.find((b) => b.position === position) ?? sorted[0] ?? null;
-
-        const resolved = resolvePublicImageUrl(banner?.image ?? banner?.mobile_image ?? null);
+        const resolved = resolvePublicImageUrl(
+            result.data?.data?.image ?? result.data.data?.mobile_image ?? null,
+        );
 
         if (!resolved) return fallback;
 
         return {
-            ...banner,
-            image: resolved,
+            success: true,
+            message: "success",
+            data: {
+                ...result.data.data,
+                image: resolved,
+            },
+            meta: "",
+            errors: "",
         };
     } catch {
         return fallback;
