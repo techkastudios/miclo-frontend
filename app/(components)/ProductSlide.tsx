@@ -1,11 +1,10 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { useRef } from "react";
 import Image from "next/image";
 
@@ -22,21 +21,22 @@ function ProductSlide({
 
     return (
         <div className="fixed bg-background/15 backdrop-blur-sm inset-0 z-10">
-            <div className="max-w-6xl p-4 bg-background absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-2xl">
-                <button
-                    className="btn-outline mb-4 rounded-full px-3! py-2!"
-                    onClick={() => {
-                        setShown(false);
+            <div className="max-w-xl p-4 bg-background absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-2xl">
+                <div className="flex items-center justify-between">
+                    <button
+                        className="btn-outline mb-4 rounded-full px-3! py-2!"
+                        onClick={() => {
+                            setShown(false);
 
-                        document
-                            .getElementsByTagName("body")[0]
-                            .classList.remove("overflow-hidden");
-                    }}
-                >
-                    X
-                </button>
-                {gallery && gallery.length > 0 ? (
-                    <>
+                            document
+                                .getElementsByTagName("body")[0]
+                                .classList.remove("overflow-hidden");
+                        }}
+                    >
+                        X
+                    </button>
+
+                    {gallery && gallery.length > 0 && (
                         <div className="flex justify-end items-center gap-4">
                             <div className="flex items-center gap-4">
                                 <button
@@ -53,18 +53,15 @@ function ProductSlide({
                                 </button>
                             </div>
                         </div>
+                    )}
+                </div>
+                {gallery && gallery.length > 0 ? (
+                    <>
                         <Swiper
-                            spaceBetween={24}
-                            slidesPerView={3}
-                            modules={[Navigation, Pagination]}
-                            pagination={{ clickable: true }}
+                            slidesPerView={1}
+                            modules={[Navigation]}
                             onSwiper={(swiper) => {
                                 swiperRef.current = swiper;
-                            }}
-                            breakpoints={{
-                                320: { slidesPerView: 1 },
-                                640: { slidesPerView: 2 },
-                                1024: { slidesPerView: 3 },
                             }}
                             className="mt-6"
                         >
@@ -76,7 +73,7 @@ function ProductSlide({
                                         loading="lazy"
                                         width={500}
                                         height={500}
-                                        className="aspect-square"
+                                        className="w-full h-125"
                                     />
                                 </SwiperSlide>
                             ))}
