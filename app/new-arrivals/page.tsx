@@ -5,7 +5,7 @@ import EditorialGrid from "../(components)/EditorialGrid";
 const FALLBACK_HERO_SRC = "/assets/hero.jpg";
 
 async function NewArrivals() {
-    const bannerData = await getHeroBanner("product_page", FALLBACK_HERO_SRC);
+    const { data: bannerData } = await getHeroBanner("product_page", FALLBACK_HERO_SRC);
     const productsResult = await getProducts({ type: "latest", next: { revalidate: 60 } });
     const products = productsResult.ok ? productsResult.data.data : [];
 

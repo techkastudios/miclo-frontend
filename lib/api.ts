@@ -1,4 +1,4 @@
-import { Banner, ProductsApiResponse } from "@/types";
+import { Banner, NavigationApiResponse, ProductsApiResponse } from "@/types";
 import { resolvePublicImageUrl } from "@/lib/utils";
 
 const DEFAULT_PUBLIC_API_URL = "http://localhost:8080";
@@ -222,11 +222,32 @@ export async function getProducts(
           ? `/api/v1/products?${qs}`
           : "/api/v1/products";
 
-    console.log();
-
     return apiFetchJson<ProductsApiResponse>(path, {
         ...fetchOptions,
         next: { revalidate: 60, ...next },
         validate: isProductsApiResponse,
+    });
+}
+
+function isNavigationApiResponse(data: unknown): data is NavigationApiResponse {
+    if (!data || typeof data !== "object") return false;
+    const o = data as Record<string, unknown>;
+    return o.success === true && o.data !== null && typeof o.data === "object";
+}
+
+/**
+ * Fetches a navigation menu by slug from `GET /api/v1/navigations/{slug}`.
+ * Returns the parsed API response on success, or a structured failure on error.
+ */
+export async function getNavigation(
+    slug: string,
+    options?: ApiFetchOptions,
+): Promise<ApiJsonSuccess<NavigationApiResponse> | ApiJsonFailure> {
+    const { next, ...fetchOptions } = options ?? {};
+
+    return apiFetchJson<NavigationApiResponse>(`/api/v1/navigations/${slug}`, {
+        ...fetchOptions,
+        next: { revalidate: 60, ...next },
+        validate: isNavigationApiResponse,
     });
 }

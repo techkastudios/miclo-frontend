@@ -92,3 +92,32 @@ export interface Banner {
     meta: string | null;
     errors: string | null;
 }
+
+export interface NavigationItem {
+    id: string;
+    label: string;
+    url: string;
+    target: string;
+    icon: string | null;
+    link_type: string;
+    sort_order: number;
+    is_active: boolean;
+    children: NavigationItem[] | [];
+}
+
+export interface NavigationData {
+    id: string;
+    name: string;
+    slug: string;
+    type: "header" | "footer" | "sidebar" | string;
+    is_active: boolean;
+    items: NavigationItem[];
+}
+
+export interface NavigationApiResponse {
+    success: boolean;
+    message: string;
+    data: NavigationData;
+    meta: string | null;
+    errors: string | null;
+}

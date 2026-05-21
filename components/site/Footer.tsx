@@ -2,11 +2,12 @@ import { CiInstagram, CiFacebook, CiTwitter, CiYoutube } from "react-icons/ci";
 import Image from "next/image";
 import Link from "next/link";
 import NewsLetterForm from "./NewsletterForm";
+import { getNavigation } from "@/lib/api";
 
-const LINKS = ["New Arrivals", "Collections", "Womenswear", "Menswear", "Kids", "Accessories", "About us", "Contacts"];
+export async function Footer() {
+  const navResult = await getNavigation("footer");
+  const items = navResult.ok ? navResult.data.data.items : [];
 
-export function Footer() {
-  
   return (
     <footer className="border-t border-border bg-surface">
       <div className="w-full px-4 md:px-8 py-14 md:py-20 grid grid-cols-12 gap-8">
@@ -31,9 +32,9 @@ export function Footer() {
           </div>
 
           <nav className="flex flex-wrap gap-x-6 gap-y-3">
-            {LINKS.map((l) => (
-              <Link key={l} href="/contacts" className="text-[11px] tracking-display uppercase text-muted-foreground hover:text-foreground transition-colors">
-                {l}
+            {items.map((item) => (
+              <Link key={item.id} href={item.url} className="text-[11px] tracking-display uppercase text-muted-foreground hover:text-foreground transition-colors">
+                {item.label}
               </Link>
             ))}
           </nav>
