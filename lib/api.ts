@@ -182,10 +182,7 @@ function isProductsApiResponse(data: unknown): data is ProductsApiResponse {
     if (!data || typeof data !== "object") return false;
     const o = data as Record<string, unknown>;
     return (
-        o.success === true &&
-        Array.isArray(o.data) &&
-        o.meta !== null &&
-        typeof o.meta === "object"
+        o.success === true && Array.isArray(o.data) && o.meta !== null && typeof o.meta === "object"
     );
 }
 
