@@ -11,8 +11,8 @@ const MOCK_BANNER: BannerData = {
     image: "https://media.yourdomain.com/banners/desktop.jpg",
     mobile_image: "https://media.yourdomain.com/banners/mobile.jpg",
     cta: {
-        label: "",
-        url: "",
+        label: "New Arrivals",
+        url: "/new-arrivals",
         target: "_self",
         link_type: "custom",
     },
@@ -23,10 +23,10 @@ const MOCK_BANNER: BannerData = {
 };
 
 const MOCK_VIDEO: BannerVideo = {
-    provider: "cloudflare",
+    provider: "local",
     status: "ready",
-    provider_playback_id: "abc123",
-    thumbnail_url: "https://videodelivery.net/abc123/thumbnails/thumbnail.jpg",
+    provider_playback_id: "",
+    thumbnail_url: "",
     playback: {
         autoplay: true,
         muted: true,
@@ -34,10 +34,10 @@ const MOCK_VIDEO: BannerVideo = {
         show_controls: false,
     },
     stream: {
-        hls: "https://videodelivery.net/abc123/manifest/video.m3u8",
-        dash: "https://videodelivery.net/abc123/manifest/video.mpd",
-        iframe: "https://iframe.videodelivery.net/abc123",
-        thumbnail: "https://videodelivery.net/abc123/thumbnails/thumbnail.jpg",
+        hls: "/videos/home-hero-vid.mp4",
+        dash: "",
+        iframe: "",
+        thumbnail: "",
     },
 };
 
