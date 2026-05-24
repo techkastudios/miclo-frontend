@@ -169,3 +169,30 @@ export interface PageApiResponse {
     meta: string | null;
     errors: string | null;
 }
+
+// Instagram api response type ----
+
+export interface InstagramCursor {
+    before: string;
+    after: string;
+}
+
+export interface InstagramPaging {
+    cursors: InstagramCursor;
+    next?: string;
+}
+
+export interface InstagramPost {
+    id: string;
+    caption: string;
+    media_type: "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM";
+    media_url: string;
+    permalink: string;
+    thumbnail_url?: string;
+    timestamp: string;
+}
+
+export interface MetaInstagramResponse {
+    data: InstagramPost[];
+    paging: InstagramPaging;
+}
