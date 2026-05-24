@@ -71,6 +71,29 @@ export interface BannerCTA {
     link_type: string;
 }
 
+export interface BannerVideoPlayback {
+    autoplay: boolean;
+    muted: boolean;
+    loop: boolean;
+    show_controls: boolean;
+}
+
+export interface BannerVideoStream {
+    hls: string;
+    dash: string;
+    iframe: string;
+    thumbnail: string;
+}
+
+export interface BannerVideo {
+    provider: string;
+    status: string;
+    provider_playback_id: string;
+    thumbnail_url: string;
+    playback: BannerVideoPlayback;
+    stream: BannerVideoStream;
+}
+
 export interface BannerData {
     id: string;
     title: string;
@@ -78,6 +101,7 @@ export interface BannerData {
     description: string | null;
     image: string;
     mobile_image: string | null;
+    video: BannerVideo | null;
     cta: BannerCTA;
     position: string;
     sort_order: number;

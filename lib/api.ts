@@ -145,6 +145,7 @@ export async function getHeroBanner(
             description: "",
             image: fallback_src,
             mobile_image: "",
+            video: null,
             cta: {
                 label: "",
                 url: "",
