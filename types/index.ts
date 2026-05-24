@@ -131,3 +131,41 @@ export interface CategoryApiResponse {
 }
 
 export type Cat = { title: string; img: string; href: string };
+
+export interface PageSEO {
+    meta_title: string | null;
+    meta_description: string | null;
+    meta_keywords: string | null;
+    og_title: string | null;
+    og_description: string | null;
+    og_image: string | null;
+    og_type: "website" | "article" | string;
+    twitter_card: "summary" | "summary_large_image" | "app" | "player";
+    canonical_url: string | null;
+    no_index: boolean;
+    no_follow: boolean;
+    schema_markup: string[];
+}
+
+export interface PageData {
+    id: string;
+    title: string;
+    slug: string;
+    excerpt: string | null;
+    content: string;
+    template: "legal" | "default" | "contact" | "about" | string;
+    status: "published" | "draft" | "archived";
+    featured_image: string | null;
+    published_at: string | null;
+    seo: PageSEO;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface PageApiResponse {
+    success: boolean;
+    message: string;
+    data: PageData;
+    meta: string | null;
+    errors: string | null;
+}

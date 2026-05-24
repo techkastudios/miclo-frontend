@@ -1,4 +1,4 @@
-import { Banner, Cat, NavigationApiResponse, ProductsApiResponse } from "@/types";
+import { Banner, Cat, NavigationApiResponse, PageApiResponse, ProductsApiResponse } from "@/types";
 import { resolvePublicImageUrl } from "@/lib/utils";
 
 const DEFAULT_PUBLIC_API_URL = "http://localhost:8080";
@@ -248,6 +248,29 @@ export async function getNavigation(
         ...fetchOptions,
         next: { revalidate: 60, ...next },
         validate: isNavigationApiResponse,
+    });
+}
+
+function isPageApiResponse(data: unknown): data is PageApiResponse {
+    if (!data || typeof data !== "object") return false;
+    const o = data as Record<string, unknown>;
+    return o.success === true && o.data !== null && typeof o.data === "object";
+}
+
+/**
+ * Fetches a CMS page by slug from `GET /api/v1/pages/{slug}`.
+ * Returns the parsed API response on success, or a structured failure on error.
+ */
+export async function getPage(
+    slug: string,
+    options?: ApiFetchOptions,
+): Promise<ApiJsonSuccess<PageApiResponse> | ApiJsonFailure> {
+    const { next, ...fetchOptions } = options ?? {};
+
+    return apiFetchJson<PageApiResponse>(`/api/v1/pages/${slug}`, {
+        ...fetchOptions,
+        next: { revalidate: 60, ...next },
+        validate: isPageApiResponse,
     });
 }
 
