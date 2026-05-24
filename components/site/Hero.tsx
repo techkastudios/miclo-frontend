@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { BannerData } from "@/types";
+import { BannerData, BannerVideo } from "@/types";
 
-export async function Hero({ title, subtitle, cta, image, video }: BannerData) {
+type HeroProps = BannerData & { video?: BannerVideo | null };
+
+export async function Hero({ title, subtitle, cta, image, video }: HeroProps) {
     const alt = title?.trim() || "MICLO new arrivals campaign";
     const showVideo = video && video.status === "ready" && video.stream?.hls;
     return (

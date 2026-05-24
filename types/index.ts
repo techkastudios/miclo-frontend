@@ -101,7 +101,6 @@ export interface BannerData {
     description: string | null;
     image: string;
     mobile_image: string | null;
-    video: BannerVideo | null;
     cta: BannerCTA;
     position: string;
     sort_order: number;
