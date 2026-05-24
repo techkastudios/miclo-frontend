@@ -1,7 +1,7 @@
 import { getPage } from "@/lib/api";
 
-async function PrivacyPolicy() {
-    const result = await getPage("privacy-policy");
+async function TermsPage() {
+    const result = await getPage("terms-conditions");
     const page = result.ok ? result.data.data : null;
 
     if (!page) {
@@ -15,12 +15,9 @@ async function PrivacyPolicy() {
     return (
         <section className="mx-auto max-w-3xl px-4 py-16">
             <h1 className="text-3xl font-semibold tracking-tight mb-10">{page.title}</h1>
-            <div
-                className="page-content"
-                dangerouslySetInnerHTML={{ __html: page.content }}
-            />
+            <div className="page-content" dangerouslySetInnerHTML={{ __html: page.content }} />
         </section>
     );
 }
 
-export default PrivacyPolicy;
+export default TermsPage;
