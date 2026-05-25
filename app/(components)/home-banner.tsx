@@ -8,8 +8,8 @@ const MOCK_BANNER: BannerData = {
     title: "Summer Sale",
     subtitle: "",
     description: "",
-    image: "https://media.yourdomain.com/banners/desktop.jpg",
-    mobile_image: "https://media.yourdomain.com/banners/mobile.jpg",
+    image: FALLBACK_HERO_SRC,
+    mobile_image: FALLBACK_HERO_SRC,
     cta: {
         label: "New Arrivals",
         url: "/new-arrivals",

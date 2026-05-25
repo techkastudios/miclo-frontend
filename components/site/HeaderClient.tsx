@@ -85,37 +85,29 @@ export function HeaderClient({ links }: { links: HeaderNavLink[] }) {
       <div className="flex h-full min-h-0 w-full flex-col">
         <div className="flex shrink-0 items-center justify-between border-b border-black/10 px-4 py-4">
           <Image src="/assets/logo.png" alt="MICLO" width={120} height={40} />
-          <div
-            role="button"
-            tabIndex={0}
+          <button
+            type="button"
             aria-label="Close menu"
             className="flex min-h-11 min-w-11 cursor-pointer touch-manipulation items-center justify-center"
-            onPointerDown={(e) => {
-              if (e.button !== 0) return;
-              e.preventDefault();
-              closeMenu();
-            }}
             onClick={closeMenu}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                closeMenu();
-              }
-            }}
           >
             <X className="pointer-events-none h-5 w-5" aria-hidden />
-          </div>
+          </button>
         </div>
         <nav className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overflow-x-hidden px-6 py-8">
-          {links.map((link) => (
-            <NavAnchor
-              key={link.id}
-              link={link}
-              pathname={pathname}
-              onNavigate={closeMenu}
-              className="touch-manipulation py-1 text-sm tracking-display uppercase text-black"
-            />
-          ))}
+          {links.length === 0 ? (
+            <p className="text-sm text-black/50">Loading menu…</p>
+          ) : (
+            links.map((link) => (
+              <NavAnchor
+                key={link.id}
+                link={link}
+                pathname={pathname}
+                onNavigate={closeMenu}
+                className="touch-manipulation py-1 text-sm tracking-display uppercase text-black"
+              />
+            ))
+          )}
         </nav>
       </div>
     </div>
@@ -124,32 +116,20 @@ export function HeaderClient({ links }: { links: HeaderNavLink[] }) {
   return (
     <header
       data-scrolled={scrolled}
-      className={`group/header bg-background/90 fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      className={`group/header isolate bg-background/90 fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled ? "backdrop-blur-md border-b border-border" : ""
       }`}
     >
       <div className="relative z-10 flex w-full flex-col items-center gap-4 px-4 py-4 md:px-8 md:py-5">
         <div className="flex w-full items-center justify-between lg:justify-center">
-          <div
-            role="button"
-            tabIndex={0}
+          <button
+            type="button"
             aria-label="Open menu"
-            className="relative z-20 flex min-h-11 min-w-11 cursor-pointer touch-manipulation items-center justify-center text-foreground lg:hidden"
-            onPointerDown={(e) => {
-              if (e.button !== 0) return;
-              e.preventDefault();
-              openMenu();
-            }}
+            className="relative z-20 flex min-h-11 min-w-11 shrink-0 cursor-pointer touch-manipulation items-center justify-center text-foreground lg:hidden"
             onClick={openMenu}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                openMenu();
-              }
-            }}
           >
             <Menu className="pointer-events-none h-5 w-5 shrink-0" aria-hidden />
-          </div>
+          </button>
 
           <Link
             href="/"
