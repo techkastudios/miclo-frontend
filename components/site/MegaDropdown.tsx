@@ -1,17 +1,11 @@
 "use client";
 
 import Link from "next/link";
-
-export interface DropdownProduct {
-    id: string;
-    name: string;
-    image: string;
-    href: string;
-}
+import type { ProductResponse } from "@/types";
 
 export interface DropdownData {
     baseHref: string;
-    products: DropdownProduct[];
+    products: ProductResponse[];
 }
 
 export function MegaDropdown({
@@ -63,13 +57,13 @@ export function MegaDropdown({
                         {data.products.map((product) => (
                             <Link
                                 key={product.id}
-                                href={product.href}
+                                href={`${product.slug}`}
                                 className="group/product block"
                             >
                                 <div className="aspect-square w-full overflow-hidden bg-neutral-100 mb-2">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
-                                        src={product.image}
+                                        src={product.featured_image}
                                         alt={product.name}
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover/product:scale-105"
                                     />

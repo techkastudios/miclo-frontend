@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 import { getProducts } from "@/lib/api";
 import type { HeaderNavLink } from "@/lib/header-navigation";
 import { MegaDropdown } from "./MegaDropdown";
-import type { DropdownData, DropdownProduct } from "./MegaDropdown";
+import type { DropdownData } from "./MegaDropdown";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -155,15 +155,9 @@ export function HeaderClient({ links }: { links: HeaderNavLink[] }) {
 
         getProducts({ category: slug, perPage: 7 }).then((result) => {
             if (!result.ok) return;
-            const products: DropdownProduct[] = result.data.data.map((p) => ({
-                id: p.id,
-                name: p.name,
-                image: p.featured_image,
-                href: `/products/${p.slug}`,
-            }));
             setCategoryData((prev) => ({
                 ...prev,
-                [activeDropdown]: { baseHref: link.url, products },
+                [activeDropdown]: { baseHref: link.url, products: result.data.data },
             }));
         });
     }, [activeDropdown, links, categoryData]);
