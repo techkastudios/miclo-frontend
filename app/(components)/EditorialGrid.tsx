@@ -24,25 +24,32 @@ export default function EditorialGrid({
         featuredImage: "",
     });
 
+    const getMobileColSpanClass = (index: number): string => {
+        const positionInLoop = index % 3;
+        if (positionInLoop === 2) return "col-span-2 aspect-2/1.5";
+        return "col-span-1 aspect-square";
+    };
+
     const getColSpanClass = (index: number): string => {
         if (!hasFullColumnsProduct) {
             const positionInLoop = index % 5;
-            if (positionInLoop < 3) return "col-span-2 aspect-square";
-            return "col-span-3 aspect-2/1.5";
+            if (positionInLoop < 3) return "sm:col-span-2 sm:aspect-square";
+            return "sm:col-span-3 sm:aspect-2/1.5";
         }
 
-        if (index < 3) return "col-span-2 aspect-square";
-        if (index === 3) return "col-span-6 min-h-[350px] aspect-2/0.75";
+        if (index < 3) return "sm:col-span-2 sm:aspect-square";
+        if (index === 3) return "sm:col-span-6 sm:min-h-[350px] sm:aspect-2/0.75";
 
         const positionInLoop = (index - 4) % 5;
-        if (positionInLoop < 2) return "col-span-3 aspect-2/1.5";
-        return "col-span-2 aspect-square";
+        if (positionInLoop < 2) return "sm:col-span-3 sm:aspect-2/1.5";
+        return "sm:col-span-2 sm:aspect-square";
     };
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-6 gap-6 my-6">
+        <div className="grid grid-cols-2 sm:grid-cols-6 gap-6 my-6">
             {products.map((product, index) => {
-                const spanClass = getColSpanClass(index);
+                const mobileClass = getMobileColSpanClass(index);
+                const desktopClass = getColSpanClass(index);
 
                 return (
                     <div
@@ -58,7 +65,7 @@ export default function EditorialGrid({
                                 .getElementsByTagName("body")[0]
                                 .classList.add("overflow-hidden");
                         }}
-                        className={`${spanClass} group relative cursor-pointer overflow-hidden bg-surface`}
+                        className={`${mobileClass} ${desktopClass} group relative cursor-pointer overflow-hidden bg-surface`}
                     >
                         <Image
                             src={product.featured_image}

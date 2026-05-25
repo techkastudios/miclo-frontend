@@ -8,7 +8,7 @@ async function AboutPage() {
         <>
             <Hero {...bannerData} />
             <section className="my-12">
-                <div className="max-w-2xl mx-auto text-center space-y-8">
+                <div className="max-w-2xl mx-auto text-center space-y-8 px-5">
                     <h3 className="uppercase font-semibold text-xl tracking-[8px]">Who we are</h3>
                     <p className="text-xl">
                         We are MICLO Bangladesh Limited, a fashion retailer committed to providing
