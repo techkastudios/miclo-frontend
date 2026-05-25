@@ -26,7 +26,7 @@ export default function EditorialGrid({
 
     const getMobileColSpanClass = (index: number): string => {
         const positionInLoop = index % 3;
-        if (positionInLoop === 2) return "col-span-2 aspect-2/1.5";
+        if (positionInLoop === 2) return "col-span-2 aspect-2/1";
         return "col-span-1 aspect-square";
     };
 
@@ -46,7 +46,7 @@ export default function EditorialGrid({
     };
 
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-6 gap-6 my-6">
+        <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 my-3 md:gap-6 md:my-6">
             {products.map((product, index) => {
                 const mobileClass = getMobileColSpanClass(index);
                 const desktopClass = getColSpanClass(index);
