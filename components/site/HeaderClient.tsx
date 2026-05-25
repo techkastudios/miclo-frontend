@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -77,38 +76,51 @@ export function HeaderClient({ links }: { links: HeaderNavLink[] }) {
 
   const drawer = (
     <div
-      className="fixed inset-0 z-100 flex h-dvh w-full bg-white text-black lg:hidden"
+      className={`fixed inset-0 z-100 transition-opacity duration-300 lg:hidden ${
+        open ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
       role="dialog"
       aria-modal="true"
       aria-label="Menu"
     >
-      <div className="flex h-full min-h-0 w-full flex-col">
-        <div className="flex shrink-0 items-center justify-between border-b border-black/10 px-4 py-4">
-          <Image src="/assets/logo.png" alt="MICLO" width={120} height={40} />
-          <button
-            type="button"
-            aria-label="Close menu"
-            className="flex min-h-11 min-w-11 cursor-pointer touch-manipulation items-center justify-center"
-            onClick={closeMenu}
-          >
-            <X className="pointer-events-none h-5 w-5" aria-hidden />
-          </button>
+      <div
+        className="fixed inset-0 bg-black/50"
+        onClick={closeMenu}
+        aria-hidden="true"
+      />
+      <div
+        className={`absolute left-0 top-0 h-full w-full max-w-sm bg-white text-black shadow-xl transition-transform duration-300 ${
+          open ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex h-full min-h-0 w-full flex-col">
+          <div className="flex shrink-0 items-center justify-between border-b border-black/10 px-4 py-4">
+            <Image src="/assets/logo.png" alt="MICLO" width={120} height={40} />
+            <button
+              type="button"
+              aria-label="Close menu"
+              className="flex min-h-11 min-w-11 cursor-pointer touch-manipulation items-center justify-center"
+              onClick={closeMenu}
+            >
+              <X className="pointer-events-none h-5 w-5" aria-hidden />
+            </button>
+          </div>
+          <nav className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overflow-x-hidden px-6 py-8">
+            {links.length === 0 ? (
+              <p className="text-sm text-black/50">Loading menu…</p>
+            ) : (
+              links.map((link) => (
+                <NavAnchor
+                  key={link.id}
+                  link={link}
+                  pathname={pathname}
+                  onNavigate={closeMenu}
+                  className="touch-manipulation py-1 text-sm tracking-display uppercase text-black"
+                />
+              ))
+            )}
+          </nav>
         </div>
-        <nav className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overflow-x-hidden px-6 py-8">
-          {links.length === 0 ? (
-            <p className="text-sm text-black/50">Loading menu…</p>
-          ) : (
-            links.map((link) => (
-              <NavAnchor
-                key={link.id}
-                link={link}
-                pathname={pathname}
-                onNavigate={closeMenu}
-                className="touch-manipulation py-1 text-sm tracking-display uppercase text-black"
-              />
-            ))
-          )}
-        </nav>
       </div>
     </div>
   );
@@ -159,7 +171,7 @@ export function HeaderClient({ links }: { links: HeaderNavLink[] }) {
         </nav>
       </div>
 
-      {open && typeof document !== "undefined" ? createPortal(drawer, document.body) : null}
+      {drawer}
     </header>
   );
 }
