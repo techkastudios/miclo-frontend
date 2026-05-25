@@ -233,7 +233,7 @@ function MegaDropdown({
         <div
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className={`fixed left-0 right-0 bg-white border-b border-black/10 shadow-lg transition-all duration-200 z-40 ${
+            className={`fixed left-0 right-0 bg-background border-t-2 border-t-black shadow-lg transition-all duration-200 z-40 ${
                 visible
                     ? "opacity-100 translate-y-0 pointer-events-auto"
                     : "opacity-0 -translate-y-1 pointer-events-none"
@@ -241,9 +241,9 @@ function MegaDropdown({
             /* top is set inline so it sits exactly below the header — see HeaderClient */
             style={{ top: "var(--header-height, 105px)" }}
         >
-            <div className="flex w-full">
+            <div className="flex container mx-auto">
                 {/* Left: always exactly 3 links */}
-                <div className="w-52 shrink-0 border-r border-black/10 py-8 px-8 flex flex-col gap-3">
+                <div className="w-52 shrink-0 border-r-2 border-black/10 py-8 px-8 flex flex-col gap-3">
                     <Link
                         href={data.baseHref}
                         className="block text-sm font-bold tracking-widest uppercase text-black hover:text-red-600 transition-colors duration-150 py-0.5"
@@ -266,17 +266,14 @@ function MegaDropdown({
 
                 {/* Right: featured products — fills remaining width */}
                 <div className="flex-1 py-8 px-8">
-                    <p className="text-[10px] tracking-[0.22em] uppercase text-black/35 mb-5">
-                        Featured
-                    </p>
-                    <div className="grid grid-cols-4 gap-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div className="grid grid-cols-4 gap-5 xl:grid-cols-6 2xl:grid-cols-7">
                         {data.products.map((product) => (
                             <Link
                                 key={product.id}
                                 href={product.href}
                                 className="group/product block"
                             >
-                                <div className="aspect-[3/4] w-full overflow-hidden bg-neutral-100 mb-2">
+                                <div className="aspect-square w-full overflow-hidden bg-neutral-100 mb-2">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={product.image}
@@ -284,7 +281,7 @@ function MegaDropdown({
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover/product:scale-105"
                                     />
                                 </div>
-                                <p className="text-[10px] tracking-[0.15em] uppercase text-black/60 group-hover/product:text-red-600 transition-colors duration-150">
+                                <p className="uppercase group-hover/product:text-red-600 transition-colors duration-150 text-center">
                                     {product.name}
                                 </p>
                             </Link>
