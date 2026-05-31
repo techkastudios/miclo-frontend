@@ -33,19 +33,22 @@ export function MegaDropdown({
             <div className="flex container mx-auto">
                 <div className="w-52 shrink-0 border-r-2 border-black/10 py-8 px-8 flex flex-col gap-3">
                     <Link
-                        href={data.baseHref}
+                        // href={data.baseHref}
+                        href={"/new-arrivals"}
                         className="block text-sm font-bold tracking-widest uppercase text-black hover:text-red-600 transition-colors duration-150 py-0.5"
                     >
                         All items
                     </Link>
                     <Link
-                        href={`${data.baseHref}/new-arrivals`}
+                        // href={`${data.baseHref}`}
+                        href={"/new-arrivals"}
                         className="block text-sm tracking-widest uppercase text-black/60 hover:text-red-600 transition-colors duration-150 py-0.5"
                     >
                         New Arrivals
                     </Link>
                     <Link
-                        href={`${data.baseHref}/collections`}
+                        // href={`${data.baseHref}`}
+                        href={`/categories/collection`}
                         className="block text-sm tracking-widest uppercase text-black/60 hover:text-red-600 transition-colors duration-150 py-0.5"
                     >
                         Collections
