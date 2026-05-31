@@ -314,7 +314,15 @@ export function HeaderClient({ links }: { links: HeaderNavLink[] }) {
             {/* Full-width mega dropdowns — rendered outside <header> so they can span 100vw freely */}
             {links.map((link) => {
                 const data = categoryData[link.label];
-                if (!link.url || link.url === "/" || !data) return null;
+                if (
+                    !link.url ||
+                    link.url === "/" ||
+                    link.url === "/contacts" ||
+                    link.url === "/about" ||
+                    data?.products.length === 0 ||
+                    !data
+                )
+                    return null;
                 return (
                     <MegaDropdown
                         key={link.id}
