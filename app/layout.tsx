@@ -23,9 +23,8 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${montserrat.variable} h-full antialiased`}
-      suppressHydrationWarning
     >
-      <body className={montserrat.className} suppressHydrationWarning>
+      <body className={montserrat.className}>
         <main className="min-h-screen bg-background pt-(--site-header-height) text-foreground">
           <Header />
           {children}
