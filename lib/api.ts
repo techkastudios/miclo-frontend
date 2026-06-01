@@ -1,4 +1,4 @@
-import { Banner, Cat, NavigationApiResponse, PageApiResponse, ProductsApiResponse } from "@/types";
+import { Banner, Cat, NavigationApiResponse, PageApiResponse, ProductsApiResponse, SingleProductApiResponse } from "@/types";
 import { resolvePublicImageUrl } from "@/lib/utils";
 
 const DEFAULT_PUBLIC_API_URL = "http://localhost:8080";
@@ -225,6 +225,29 @@ export async function getProducts(
         ...fetchOptions,
         next: { revalidate: 60, ...next },
         validate: isProductsApiResponse,
+    });
+}
+
+function isSingleProductApiResponse(data: unknown): data is SingleProductApiResponse {
+    if (!data || typeof data !== "object") return false;
+    const o = data as Record<string, unknown>;
+    return o.success === true && o.data !== null && typeof o.data === "object" && !Array.isArray(o.data);
+}
+
+/**
+ * Fetches a single product by slug from `GET /api/v1/products/{slug}`.
+ * Returns the parsed API response with `data` as a single `ProductResponse`.
+ */
+export async function getProduct(
+    slug: string,
+    options?: ApiFetchOptions,
+): Promise<ApiJsonSuccess<SingleProductApiResponse> | ApiJsonFailure> {
+    const { next, ...fetchOptions } = options ?? {};
+
+    return apiFetchJson<SingleProductApiResponse>(`/api/v1/products/${slug}`, {
+        ...fetchOptions,
+        next: { revalidate: 60, ...next },
+        validate: isSingleProductApiResponse,
     });
 }
 

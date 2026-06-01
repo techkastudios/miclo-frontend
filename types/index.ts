@@ -64,6 +64,14 @@ export interface ProductsApiResponse {
     errors: string | null;
 }
 
+export interface SingleProductApiResponse {
+    success: boolean;
+    message: string;
+    data: ProductResponse;
+    meta: string | null;
+    errors: string | null;
+}
+
 export interface BannerCTA {
     label: string | null;
     url: string | null;

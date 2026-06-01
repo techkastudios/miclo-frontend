@@ -16,8 +16,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html
@@ -29,6 +31,7 @@ export default function RootLayout({
         <main className="min-h-screen bg-background pt-(--site-header-height) text-foreground">
           <Header />
           {children}
+          {modal}
           <Footer />
         </main>
       </body>

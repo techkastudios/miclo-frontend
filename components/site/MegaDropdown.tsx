@@ -60,7 +60,8 @@ export function MegaDropdown({
                         {data.products.map((product) => (
                             <Link
                                 key={product.id}
-                                href={`${product.slug}`}
+                                href={`/products/${product.slug}`}
+                                scroll={false}
                                 className="group/product block"
                             >
                                 <div className="aspect-square w-full overflow-hidden bg-neutral-100 mb-2">
