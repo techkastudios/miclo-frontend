@@ -1,18 +1,49 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { getProduct } from "@/lib/api";
 import type { ProductResponse } from "@/types";
 import { ShareButton } from "./ShareButton";
+import ProductSlide from "./ProductSlide";
 
 interface ProductDetailsProps {
     slug: string;
 }
 
+function Skeleton() {
+    return (
+        <div className="flex flex-col md:flex-row gap-6 p-6 animate-pulse">
+            <div className="flex-1">
+                <div className="relative aspect-square w-full overflow-hidden bg-surface">
+                    <div className="h-full w-full bg-muted" />
+                </div>
+            </div>
+            <div className="flex flex-col gap-4 flex-1">
+                <div className="space-y-3">
+                    <div className="h-3 w-20 bg-muted rounded" />
+                    <div className="h-6 w-3/4 bg-muted rounded" />
+                    <div className="h-4 w-full bg-muted rounded" />
+                </div>
+                <div className="h-8 w-28 bg-muted rounded mt-2" />
+                <hr className="border-border" />
+                <div className="flex items-center gap-3">
+                    <div className="h-3 w-10 bg-muted rounded" />
+                    <div className="h-8 w-8 rounded-full bg-muted" />
+                    <div className="h-8 w-8 rounded-full bg-muted" />
+                    <div className="h-8 w-8 rounded-full bg-muted" />
+                </div>
+                <hr className="border-border" />
+                <div className="space-y-1">
+                    <div className="h-3 w-32 bg-muted rounded" />
+                    <div className="h-3 w-24 bg-muted rounded" />
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export function ProductDetails({ slug }: ProductDetailsProps) {
     const [product, setProduct] = useState<ProductResponse | null>(null);
-    const [selectedImage, setSelectedImage] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -26,11 +57,7 @@ export function ProductDetails({ slug }: ProductDetailsProps) {
     }, [slug]);
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center p-16">
-                <span className="text-sm text-muted-foreground">Loading...</span>
-            </div>
-        );
+        return <Skeleton />;
     }
 
     if (!product) {
@@ -41,11 +68,6 @@ export function ProductDetails({ slug }: ProductDetailsProps) {
         );
     }
 
-    const images =
-        product.gallery && product.gallery.length > 0
-            ? [product.featured_image, ...product.gallery]
-            : [product.featured_image];
-
     const productUrl =
         typeof window !== "undefined"
             ? `${window.location.origin}/products/${product.slug}`
@@ -54,38 +76,7 @@ export function ProductDetails({ slug }: ProductDetailsProps) {
     return (
         <div className="flex flex-col md:flex-row gap-6 p-6">
             <div className="flex-1">
-                <div className="relative aspect-square overflow-hidden bg-surface">
-                    <Image
-                        src={images[selectedImage]}
-                        alt=""
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                </div>
-                {images.length > 1 && (
-                    <div className="flex gap-2 mt-3 overflow-x-auto">
-                        {images.map((img, i) => (
-                            <button
-                                key={img}
-                                onClick={() => setSelectedImage(i)}
-                                className={`relative h-16 w-16 flex-shrink-0 overflow-hidden border-2 transition-colors ${
-                                    i === selectedImage
-                                        ? "border-foreground"
-                                        : "border-transparent hover:border-foreground/30"
-                                }`}
-                            >
-                                <Image
-                                    src={img}
-                                    alt=""
-                                    fill
-                                    className="object-cover"
-                                    sizes="64px"
-                                />
-                            </button>
-                        ))}
-                    </div>
-                )}
+                <ProductSlide featuredImage={product.featured_image} gallery={product.gallery} />
             </div>
 
             <div className="flex flex-col gap-4 flex-1">
