@@ -1,19 +1,16 @@
 import { Hero } from "@/components/site/Hero";
-import { getHeroBanner, getProducts } from "@/lib/api";
-import EditorialGrid from "../(components)/EditorialGrid";
+import { getHeroBanner } from "@/lib/api";
+import InfiniteScroll from "../(components)/InfiniteScroll";
 
 const FALLBACK_HERO_SRC = "/assets/default-banner.jpeg";
 
 async function NewArrivals() {
     const { data: bannerData } = await getHeroBanner("product_page", FALLBACK_HERO_SRC);
-    const productsResult = await getProducts({ type: "latest", next: { revalidate: 60 } });
-    const products = productsResult.ok ? productsResult.data.data : [];
 
     return (
         <>
             <Hero {...bannerData} />
-
-            <EditorialGrid products={products} hasFullColumnsProduct={false} />
+            <InfiniteScroll productType="latest" hasFullColumnsProduct={false} />
         </>
     );
 }

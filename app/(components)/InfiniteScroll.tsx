@@ -6,7 +6,8 @@ import type { ProductResponse } from "@/types";
 import EditorialGrid from "./EditorialGrid";
 
 interface InfiniteScrollProps {
-    productType: string;
+    productType?: string;
+    category?: string;
     hasFullColumnsProduct?: boolean;
 }
 
@@ -15,6 +16,7 @@ const LOAD_MORE_PER_PAGE = 6;
 
 export default function InfiniteScroll({
     productType,
+    category,
     hasFullColumnsProduct,
 }: InfiniteScrollProps) {
     const [products, setProducts] = useState<ProductResponse[]>([]);
@@ -28,7 +30,8 @@ export default function InfiniteScroll({
         async (pageNum: number, perPage: number) => {
             setLoading(true);
             const result = await getProducts({
-                type: productType,
+                ...(productType ? { type: productType } : {}),
+                ...(category ? { category } : {}),
                 page: pageNum,
                 perPage,
                 next: { revalidate: 0 },
@@ -43,7 +46,7 @@ export default function InfiniteScroll({
 
             return data;
         },
-        [productType],
+        [productType, category],
     );
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import { Hero } from "@/components/site/Hero";
-import { apiFetchJson, getHeroBanner, getProducts } from "@/lib/api";
+import { apiFetchJson, getHeroBanner } from "@/lib/api";
 import { resolvePublicImageUrl } from "@/lib/utils";
-import EditorialGrid from "@/app/(components)/EditorialGrid";
+import InfiniteScroll from "@/app/(components)/InfiniteScroll";
 import type { CategoryApiResponse } from "@/types";
 
 const FALLBACK_HERO_SRC = "/assets/default-banner.jpeg";
@@ -21,13 +21,13 @@ async function CategoryPage(props: { params: Params }) {
     }
 
     const { data } = await getHeroBanner("category_hero", heroBanner);
-    const productsResult = await getProducts({ category: slug, next: { revalidate: 60 } });
-    const products = productsResult.ok ? productsResult.data.data : [];
 
     return (
         <>
             <Hero {...data} />
-            <EditorialGrid products={products} />
+            <section className="py-12">
+                <InfiniteScroll category={slug} />
+            </section>
         </>
     );
 }

@@ -53,7 +53,7 @@ export default function EditorialGrid({
 
                 return (
                     <div
-                        key={product.id}
+                        key={`${product.id}-${index}`}
                         onClick={() => {
                             setIsShown(true);
                             setSlideProperties({

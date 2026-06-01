@@ -20,7 +20,7 @@ function ProductSlide({
     const swiperRef = useRef<any>(null);
 
     return (
-        <div className="fixed bg-background/15 backdrop-blur-sm inset-0 z-10">
+        <div className="fixed bg-background/15 backdrop-blur-sm inset-0 z-100">
             <div className="max-w-xl p-4 bg-background absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-2xl">
                 <div className="flex items-center justify-between">
                     <button
