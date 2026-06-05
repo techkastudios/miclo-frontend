@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 
-import "swiper/css";
-import "swiper/css/navigation";
+// import "swiper/css";
 import { CiImageOff } from "react-icons/ci";
+import { Navigation } from "swiper/modules";
 
 function ProductSlide({
     featuredImage,
@@ -39,18 +38,55 @@ function ProductSlide({
     }
 
     return (
-        <div className="w-full aspect-square relative overflow-hidden">
+        <div className="relative border border-border rounded-lg overflow-hidden">
             <Swiper
                 slidesPerView={1}
                 modules={[Navigation]}
-                className="absolute inset-0 w-full h-full"
+                navigation={{
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                }}
+                className="w-full"
             >
-                {images.map((img) => (
-                    <SwiperSlide key={img}>
-                        <Image src={img} alt="" fill className="object-cover" />
+                {images.map((url) => (
+                    <SwiperSlide key={url}>
+                        <Image
+                            src={url}
+                            alt=""
+                            width={800}
+                            height={800}
+                            className="w-full object-cover"
+                        />
                     </SwiperSlide>
                 ))}
             </Swiper>
+
+            <button
+                type="button"
+                className="swiper-button-prev absolute left-2 top-1/2 -translate-y-1/2 z-10 size-10 flex items-center justify-center rounded-full bg-white/80 shadow hover:bg-white transition-colors"
+            >
+                <svg width="7" height="12" viewBox="0 0 7 12" fill="none">
+                    <path
+                        d="M6 1L1 6L6 11"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                    />
+                </svg>
+            </button>
+            <button
+                type="button"
+                className="swiper-button-next absolute right-2 top-1/2 -translate-y-1/2 z-10 size-10 flex items-center justify-center rounded-full bg-white/80 shadow hover:bg-white transition-colors"
+            >
+                <svg width="7" height="12" viewBox="0 0 7 12" fill="none">
+                    <path
+                        d="M1 1L6 6L1 11"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                    />
+                </svg>
+            </button>
         </div>
     );
 }
