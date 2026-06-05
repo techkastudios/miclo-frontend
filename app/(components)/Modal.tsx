@@ -1,7 +1,9 @@
 "use client";
 
+import { Cross } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef } from "react";
+import { CgClose } from "react-icons/cg";
 
 export function Modal({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -19,12 +21,12 @@ export function Modal({ children }: { children: React.ReactNode }) {
                 if (e.target === overlayRef.current) onDismiss();
             }}
         >
-            <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto bg-background shadow-2xl">
+            <div className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto bg-background shadow-2xl">
                 <button
                     onClick={onDismiss}
-                    className="btn-outline absolute top-4 right-4 z-10 rounded-full px-3! py-2!"
+                    className="btn-ghost absolute top-1 right-1 z-10 rounded-full pl-3! pr-2.5! py-2! cursor-pointer"
                 >
-                    X
+                    <CgClose />
                 </button>
                 {children}
             </div>

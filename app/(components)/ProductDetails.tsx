@@ -74,12 +74,12 @@ export function ProductDetails({ slug }: ProductDetailsProps) {
             : `/products/${product.slug}`;
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 p-6 md:pt-6 pt-8">
             <div>
                 <ProductSlide featuredImage={product.featured_image} gallery={product.gallery} />
             </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2 md:gap-4">
                 <div>
                     <p className="text-xs uppercase tracking-display text-muted-foreground">
                         {product.category?.name}
