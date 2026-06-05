@@ -1,6 +1,5 @@
 "use client";
 
-import { Cross } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef } from "react";
 import { CgClose } from "react-icons/cg";
