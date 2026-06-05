@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// import "swiper/css";
 import { CiImageOff } from "react-icons/ci";
 import { Navigation } from "swiper/modules";
+import "swiper/css";
 
 function ProductSlide({
     featuredImage,
@@ -50,20 +49,16 @@ function ProductSlide({
             >
                 {images.map((url) => (
                     <SwiperSlide key={url}>
-                        <Image
-                            src={url}
-                            alt=""
-                            width={800}
-                            height={800}
-                            className="w-full object-cover"
-                        />
+                        <div className="w-full aspect-square relative">
+                            <Image src={url} alt="" fill className="object-cover" />
+                        </div>
                     </SwiperSlide>
                 ))}
             </Swiper>
 
             <button
                 type="button"
-                className="swiper-button-prev absolute left-2 top-1/2 -translate-y-1/2 z-10 size-10 flex items-center justify-center rounded-full bg-white/80 shadow hover:bg-white transition-colors"
+                className="swiper-button-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 size-10 flex items-center justify-center rounded-full bg-white/80 shadow hover:bg-white transition-colors"
             >
                 <svg width="7" height="12" viewBox="0 0 7 12" fill="none">
                     <path
@@ -76,7 +71,7 @@ function ProductSlide({
             </button>
             <button
                 type="button"
-                className="swiper-button-next absolute right-2 top-1/2 -translate-y-1/2 z-10 size-10 flex items-center justify-center rounded-full bg-white/80 shadow hover:bg-white transition-colors"
+                className="swiper-button-next absolute right-0 top-1/2 -translate-y-1/2 z-10 size-10 flex items-center justify-center rounded-full bg-white/80 shadow hover:bg-white transition-colors"
             >
                 <svg width="7" height="12" viewBox="0 0 7 12" fill="none">
                     <path

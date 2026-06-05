@@ -12,13 +12,13 @@ interface ProductDetailsProps {
 
 function Skeleton() {
     return (
-        <div className="flex flex-col md:flex-row gap-6 p-6 animate-pulse">
-            <div className="flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 animate-pulse">
+            <div>
                 <div className="relative aspect-square w-full overflow-hidden bg-surface">
                     <div className="h-full w-full bg-muted" />
                 </div>
             </div>
-            <div className="flex flex-col gap-4 flex-1">
+            <div className="flex flex-col gap-4">
                 <div className="space-y-3">
                     <div className="h-3 w-20 bg-muted rounded" />
                     <div className="h-6 w-3/4 bg-muted rounded" />
@@ -74,12 +74,12 @@ export function ProductDetails({ slug }: ProductDetailsProps) {
             : `/products/${product.slug}`;
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 p-6">
-            <div className="flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+            <div>
                 <ProductSlide featuredImage={product.featured_image} gallery={product.gallery} />
             </div>
 
-            <div className="flex flex-col gap-4 flex-1">
+            <div className="flex flex-col gap-4">
                 <div>
                     <p className="text-xs uppercase tracking-display text-muted-foreground">
                         {product.category?.name}
